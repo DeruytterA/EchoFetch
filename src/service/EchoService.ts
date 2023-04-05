@@ -524,8 +524,8 @@ export class EchoService {
     }
 
     let fetchPromise = new EchoPromise(new Promise<T>((resolve, reject) => {
-      //todo add url params to the fetch url
-      fetch(fetchData.url, fetchData)
+      const url = `${fetchData.url}?${query.map(q => encodeURIComponent(q.name) + '=' + encodeURIComponent(q.value)).join('&')}`;
+      fetch(url, fetchData)
         .then(response => {
           let echoResponse: EchoResponse = response;
           if (response.ok) {
