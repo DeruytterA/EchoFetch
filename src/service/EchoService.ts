@@ -519,6 +519,10 @@ export class EchoService {
       echoRequest = interceptorRequest;
     }
 
+    if (['GET', 'HEAD', 'OPTIONS', 'DELETE'].includes(<string>fetchData.method)) {
+      delete fetchData.body;
+    }
+
     let fetchPromise = new EchoPromise(new Promise<T>((resolve, reject) => {
       //todo add url params to the fetch url
       fetch(fetchData.url, fetchData)
