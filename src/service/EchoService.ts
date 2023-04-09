@@ -521,7 +521,13 @@ export class EchoService {
 
     let fetchPromise = new EchoPromise(new Promise<T>((resolve, reject) => {
       //todo add url params to the fetch url
-      fetch(fetchData.url, fetchData)
+      let fetchRequest
+      if (fetchData.method === 'GET' || fetchData.method === 'HEAD') {
+        fetchRequest = fetch(fetchData.url)
+      } else {
+        fetchRequest = fetch(fetchData.url, fetchData)
+      }
+      fetchRequest
         .then(response => {
           let echoResponse: EchoResponse = response;
           if (response.ok) {
