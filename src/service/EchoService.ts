@@ -13,7 +13,6 @@ import {EchoResponse} from "../types/EchoResponse";
 import {EchoRequest} from "../types/EchoRequest";
 import {EchoPromiseStatus} from "../types/EchoPromiseStatus";
 import {EchoError} from "../types/EchoError";
-import {default as Vue} from "vue";
 
 export class EchoService {
 
@@ -490,12 +489,12 @@ export class EchoService {
       const formData = this.resolveFormData(methodName, methodArguments);
 
       // Necessary on Node.JS
-      // In browser Axios will automatically append the correct headers.
       if (formData) {
         fetchData.headers = {...fetchData.headers}
       }
 
-      fetchData.body = JSON.stringify(FormData);
+      fetchData.body = formData
+      fetchData.headers = new Headers()
     }
 
     let echoRequest: EchoRequest = fetchData;
