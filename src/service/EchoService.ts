@@ -269,7 +269,7 @@ export class EchoService {
       const formFieldValue = methodArgs[formFieldIndex];
 
       // Check for potential undefined.
-      if (!formFieldValue) {
+      if (!formFieldValue && formFieldValue !== '') {
         throw new Error(`Undefined value for form field '${formFieldData?.isObject}'`);
       }
 
