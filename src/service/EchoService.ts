@@ -547,7 +547,7 @@ export class EchoService {
               echoResponse = interceptorResponse;
             }
 
-            let data = echoResponse.json();
+            let data = echoResponse.json().catch(() => {});
 
             // Execute the converters on the response.
             // First converter that can convert the given response will parse it.
