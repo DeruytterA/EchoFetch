@@ -1,12 +1,11 @@
-import {EchoServiceInterceptor} from "./EchoServiceInterceptor";
-import {EchoServiceConverter} from "./EchoServiceConverter";
+import { EchoServiceInterceptor } from './EchoServiceInterceptor'
+import { EchoServiceConverter } from './EchoServiceConverter'
 
 export class EchoServiceBuilder {
-
     /**
      * Base URL added before every request path.
      */
-    private baseUrl: string = "";
+    private baseUrl: string = '';
 
     /**
      * List of interceptors.
@@ -22,58 +21,58 @@ export class EchoServiceBuilder {
      * Build an EchoService
      * @param service Classname of the service to build
      */
-    public build<T>(service: new(builder: EchoServiceBuilder) => T): T {
+    public build<T> (service: new(builder: EchoServiceBuilder) => T): T {
         return new service(this)
     }
 
     /**
      * Get the base URL of the instance.
      */
-    public getBaseUrl(): string {
-        return this.baseUrl;
+    public getBaseUrl (): string {
+        return this.baseUrl
     }
 
     /**
      * Set the base URL of the instance.
      * @param baseUrl
      */
-    public setBaseUrl(baseUrl: string): EchoServiceBuilder {
-        this.baseUrl = baseUrl;
+    public setBaseUrl (baseUrl: string): EchoServiceBuilder {
+        this.baseUrl = baseUrl
 
-        return this;
+        return this
     }
 
     /**
      * Get the list with interceptors.
      */
-    public getInterceptors(): Array<EchoServiceInterceptor> {
-        return this.interceptors;
+    public getInterceptors (): Array<EchoServiceInterceptor> {
+        return this.interceptors
     }
 
     /**
      * Add an interceptor to the list of interceptors.
      * @param interceptor
      */
-    public addInterceptor(interceptor: EchoServiceInterceptor): EchoServiceBuilder {
-        this.interceptors.push(interceptor);
+    public addInterceptor (interceptor: EchoServiceInterceptor): EchoServiceBuilder {
+        this.interceptors.push(interceptor)
 
-        return this;
+        return this
     }
 
     /**
      * Get the list of converters.
      */
-    public getConverters(): Array<EchoServiceConverter> {
-        return this.converters;
+    public getConverters (): Array<EchoServiceConverter> {
+        return this.converters
     }
 
     /**
      * Add a converter to the list of converters.
      * @param converter
      */
-    public addConverter(converter: EchoServiceConverter): EchoServiceBuilder {
-        this.converters.push(converter);
+    public addConverter (converter: EchoServiceConverter): EchoServiceBuilder {
+        this.converters.push(converter)
 
-        return this;
+        return this
     }
 }

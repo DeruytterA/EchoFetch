@@ -1,10 +1,10 @@
-import {EchoService} from "../../service/EchoService";
+import { EchoService } from '../../service/EchoService'
 
 /**
  * Register a path parameter for a given method.
  * @param pathName Name of parameter
  * @constructor
  */
-export function Path(pathName: string): Function {
-    return EchoService._registerPathParameter(pathName);
+export function Path (pathName: string): Function {
+    return EchoService._registerPathParameter(pathName)
 }

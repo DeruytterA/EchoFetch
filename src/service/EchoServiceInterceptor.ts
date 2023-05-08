@@ -1,6 +1,6 @@
-import {EchoRequest} from "../types/EchoRequest";
-import {EchoResponse} from "../types/EchoResponse";
-import {EchoError} from "../types/EchoError";
+import { EchoRequest } from '../types/EchoRequest'
+import { EchoResponse } from '../types/EchoResponse'
+import { EchoError } from '../types/EchoError'
 
 export interface EchoServiceInterceptor {
 

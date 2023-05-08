@@ -1,4 +1,4 @@
-import {EchoResponse} from "../types/EchoResponse";
+import { EchoResponse } from '../types/EchoResponse'
 
 export interface EchoServiceConverter {
 

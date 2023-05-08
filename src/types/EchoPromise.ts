@@ -1,16 +1,15 @@
-import {EchoPromiseStatus} from "./EchoPromiseStatus";
-import {EchoError} from "./EchoError";
-import {EchoResponse} from "./EchoResponse";
+import { EchoPromiseStatus } from './EchoPromiseStatus'
+import { EchoError } from './EchoError'
+import { EchoResponse } from './EchoResponse'
 
 export class EchoPromise<T> {
-
     /**
      * Promise that will be used as EchoPromise.
      */
     private promise: Promise<T>;
 
-    constructor(promise: Promise<T>) {
-        this.promise = promise;
+    constructor (promise: Promise<T>) {
+        this.promise = promise
     }
 
     /**
@@ -36,58 +35,58 @@ export class EchoPromise<T> {
     /**
      * Get if the request is loading.
      */
-    isLoading(): boolean {
-        return this.status === EchoPromiseStatus.LOADING;
+    isLoading (): boolean {
+        return this.status === EchoPromiseStatus.LOADING
     }
 
     /**
      * Get if the request succeeded.
      */
-    isSuccess(): boolean {
-        return this.status === EchoPromiseStatus.SUCCESS;
+    isSuccess (): boolean {
+        return this.status === EchoPromiseStatus.SUCCESS
     };
 
     /**
      * Get if the request failed.
      */
-    isError(): boolean {
-        return this.status === EchoPromiseStatus.ERROR;
+    isError (): boolean {
+        return this.status === EchoPromiseStatus.ERROR
     }
 
     /**
      * Convert the optional data object to an actual data object.
      *  Warning: will throw error when not defined.
      */
-    requireData(): T {
-        if(this.data === undefined) {
-            throw new Error("Data is undefined.")
+    requireData (): T {
+        if (this.data === undefined) {
+            throw new Error('Data is undefined.')
         }
 
-        return this.data!!;
+        return this.data!!
     }
 
     /**
      * Convert the optional error object to an actual error object.
      *  Warning: will throw error when not defined.
      */
-    requireError(): EchoError {
-        if(this.error === undefined) {
-            throw new Error("Error is undefined.")
+    requireError (): EchoError {
+        if (this.error === undefined) {
+            throw new Error('Error is undefined.')
         }
 
-        return this.error!!;
+        return this.error!!
     }
 
     /**
      * Convert the optional response object to an actual response object.
      *  Warning: will throw error when not defined.
      */
-    requireResponse(): EchoResponse {
-        if(this.response === undefined) {
-            throw new Error("Response is undefined.")
+    requireResponse (): EchoResponse {
+        if (this.response === undefined) {
+            throw new Error('Response is undefined.')
         }
 
-        return this.response!!;
+        return this.response!!
     }
 
     /**
@@ -96,8 +95,8 @@ export class EchoPromise<T> {
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null) {
-        return this.promise.then(onfulfilled, onrejected);
+    then<TResult1 = T, TResult2 = never> (onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null) {
+        return this.promise.then(onfulfilled, onrejected)
     }
 
     /**
@@ -105,8 +104,8 @@ export class EchoPromise<T> {
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null) {
-        return this.promise.catch();
+    catch<TResult = never> (onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null) {
+        return this.promise.catch()
     }
 
     /**
@@ -115,15 +114,15 @@ export class EchoPromise<T> {
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null) {
-        return this.promise.finally(onfinally);
+    finally (onfinally?: (() => void) | undefined | null) {
+        return this.promise.finally(onfinally)
     }
 
     /**
      * Get the internal promise.
      * @returns Internal promise used for extending a promise.
      */
-    getPromise(): Promise<T> {
-        return this.promise;
+    getPromise (): Promise<T> {
+        return this.promise
     }
 }

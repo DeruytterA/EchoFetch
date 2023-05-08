@@ -1,21 +1,20 @@
-import {EchoServiceInterceptor} from "./EchoServiceInterceptor";
-import {EchoServiceConverter} from "./EchoServiceConverter";
-import {EchoServiceBuilder} from "./EchoServiceBuilder";
-import {RequestMethod} from "../types/RequestMethod";
-import {MapUtil} from "../util/MapUtil";
-import {EchoPromise} from "../types/EchoPromise";
-import {ServiceMetadata} from "../types/ServiceMetadata";
-import {RequestHeaders} from "../types/RequestHeaders";
-import {RequestQueries} from "../types/RequestQueries";
-import {RequestHeader} from "../types/RequestHeader";
-import {RequestQuery} from "../types/RequestQuery";
-import {EchoResponse} from "../types/EchoResponse";
-import {EchoRequest} from "../types/EchoRequest";
-import {EchoPromiseStatus} from "../types/EchoPromiseStatus";
-import {EchoError} from "../types/EchoError";
+import { EchoServiceInterceptor } from './EchoServiceInterceptor'
+import { EchoServiceConverter } from './EchoServiceConverter'
+import { EchoServiceBuilder } from './EchoServiceBuilder'
+import { RequestMethod } from '../types/RequestMethod'
+import { MapUtil } from '../util/MapUtil'
+import { EchoPromise } from '../types/EchoPromise'
+import { ServiceMetadata } from '../types/ServiceMetadata'
+import { RequestHeaders } from '../types/RequestHeaders'
+import { RequestQueries } from '../types/RequestQueries'
+import { RequestHeader } from '../types/RequestHeader'
+import { RequestQuery } from '../types/RequestQuery'
+import { EchoResponse } from '../types/EchoResponse'
+import { EchoRequest } from '../types/EchoRequest'
+import { EchoPromiseStatus } from '../types/EchoPromiseStatus'
+import { EchoError } from '../types/EchoError'
 
 export class EchoService {
-
   /**
    * Base URL, will be joined before the path of each method in the service.
    */
@@ -42,13 +41,13 @@ export class EchoService {
    * Create a service
    * @param serviceBuilder Instance of the EchoServiceBuilder.
    */
-  constructor(serviceBuilder: EchoServiceBuilder) {
-    this.baseUrl = serviceBuilder.getBaseUrl();
-    this.interceptors = serviceBuilder.getInterceptors();
-    this.converters = serviceBuilder.getConverters();
+  constructor (serviceBuilder: EchoServiceBuilder) {
+    this.baseUrl = serviceBuilder.getBaseUrl()
+    this.interceptors = serviceBuilder.getInterceptors()
+    this.converters = serviceBuilder.getConverters()
 
     // Implement all the methods inside the service.
-    this.implementMethods();
+    this.implementMethods()
   }
 
   /**
@@ -57,12 +56,12 @@ export class EchoService {
    * @param requestMethod EchoRequest Method
    * @private
    */
-  public setMetadataMethod(methodName: string, requestMethod: RequestMethod) {
-    const metadata = this.getMetadataForMethod(methodName);
+  public setMetadataMethod (methodName: string, requestMethod: RequestMethod) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestMethod = requestMethod;
+    metadata.requestMethod = requestMethod
 
-    this.metadataMap?.set(methodName, metadata);
+    this.metadataMap?.set(methodName, metadata)
   }
 
   /**
@@ -71,10 +70,10 @@ export class EchoService {
    * @param requestPath EchoRequest path (absolute or relative to the base URL)
    * @private
    */
-  private setMetadataPath(methodName: string, requestPath: string) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private setMetadataPath (methodName: string, requestPath: string) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestPath = requestPath;
+    metadata.requestPath = requestPath
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -85,10 +84,10 @@ export class EchoService {
    * @param requestHeaders EchoRequest headers
    * @private
    */
-  private setMetadataHeaders(methodName: string, requestHeaders: RequestHeaders) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private setMetadataHeaders (methodName: string, requestHeaders: RequestHeaders) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestHeaders = requestHeaders;
+    metadata.requestHeaders = requestHeaders
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -99,10 +98,10 @@ export class EchoService {
    * @param requestQueries EchoRequest queries
    * @private
    */
-  private setMetadataQueries(methodName: string, requestQueries: RequestQueries) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private setMetadataQueries (methodName: string, requestQueries: RequestQueries) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestQueries = requestQueries;
+    metadata.requestQueries = requestQueries
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -113,10 +112,10 @@ export class EchoService {
    * @param isFormUrlEncoded If the request is FormUrlEncoded.
    * @private
    */
-  private setMetadataFormUrlEncoded(methodName: string, isFormUrlEncoded: boolean) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private setMetadataFormUrlEncoded (methodName: string, isFormUrlEncoded: boolean) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.isFormUrlEncoded = isFormUrlEncoded;
+    metadata.isFormUrlEncoded = isFormUrlEncoded
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -127,10 +126,10 @@ export class EchoService {
    * @param isFormMultipart If the request is FormMultipart.
    * @private
    */
-  private setMetadataFormMultipart(methodName: string, isFormMultipart: boolean) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private setMetadataFormMultipart (methodName: string, isFormMultipart: boolean) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.isFormMultipart = isFormMultipart;
+    metadata.isFormMultipart = isFormMultipart
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -141,10 +140,10 @@ export class EchoService {
    * @param pathParameter Name of the path parameter to replace
    * @param index Index of the parameter in the method
    */
-  private addMetadataPathParameter(methodName: string, pathParameter: string, index: number) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private addMetadataPathParameter (methodName: string, pathParameter: string, index: number) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestPathParameters.set(index, pathParameter);
+    metadata.requestPathParameters.set(index, pathParameter)
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -156,10 +155,10 @@ export class EchoService {
    * @param isObject If the given parameter is an object of form fields or a single form field.
    * @param index Index of the parameter in the method
    */
-  private addMetadataFormFieldParameter(methodName: string, key: string, isObject: boolean, index: number) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private addMetadataFormFieldParameter (methodName: string, key: string, isObject: boolean, index: number) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestFormFieldParameters.set(index, {key, isObject});
+    metadata.requestFormFieldParameters.set(index, { key, isObject })
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -170,10 +169,10 @@ export class EchoService {
    * @param headerName Name of the header to send
    * @param index Index of the parameter in the method
    */
-  private addMetadataHeaderParameter(methodName: string, headerName: string, index: number) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private addMetadataHeaderParameter (methodName: string, headerName: string, index: number) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestHeaderParameters.set(index, headerName);
+    metadata.requestHeaderParameters.set(index, headerName)
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -183,10 +182,10 @@ export class EchoService {
    * @param methodName Name of the method
    * @param index Index of the parameter in the method
    */
-  private addMetadataBodyParameter(methodName: string, index: number) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private addMetadataBodyParameter (methodName: string, index: number) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestBodyParameters.push(index);
+    metadata.requestBodyParameters.push(index)
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -197,10 +196,10 @@ export class EchoService {
    * @param queryName Name of the query to send
    * @param index Index of the parameter in the method
    */
-  private addMetadataQueryParameter(methodName: string, queryName: string, index: number) {
-    const metadata = this.getMetadataForMethod(methodName);
+  private addMetadataQueryParameter (methodName: string, queryName: string, index: number) {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    metadata.requestQueryParameters.set(index, queryName);
+    metadata.requestQueryParameters.set(index, queryName)
 
     this.metadataMap?.set(methodName, metadata)
   }
@@ -209,15 +208,14 @@ export class EchoService {
    * Get the metadata for a given method.
    * @param methodName Name of the method.
    */
-  private getMetadataForMethod(methodName: string): ServiceMetadata {
-
+  private getMetadataForMethod (methodName: string): ServiceMetadata {
     // Check if the map exists, if not create it.
     // Do this to prevent initialization errors when using decorators.
     if (this.metadataMap == undefined) {
-      this.metadataMap = new Map();
+      this.metadataMap = new Map()
     }
 
-    return MapUtil.getOrDefault(this.metadataMap, methodName, new ServiceMetadata());
+    return MapUtil.getOrDefault(this.metadataMap, methodName, new ServiceMetadata())
   }
 
   /**
@@ -225,20 +223,20 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveUrl(methodName: string, methodArgs: Array<unknown>): string {
+  private resolveUrl (methodName: string, methodArgs: Array<unknown>): string {
     const metadata = this.getMetadataForMethod(methodName)
 
-    let url = this.baseUrl;
-    let path = metadata.requestPath;
+    let url = this.baseUrl
+    let path = metadata.requestPath
 
     // Add/remove slash to end when necessary.
-    if (url.endsWith("/")) {
-      if (path?.startsWith("/")) {
-        path = path?.substr(1);
+    if (url.endsWith('/')) {
+      if (path?.startsWith('/')) {
+        path = path?.substr(1)
       }
     } else {
-      if (!path?.startsWith("/")) {
-        path = "/" + path;
+      if (!path?.startsWith('/')) {
+        path = '/' + path
       }
     }
 
@@ -247,12 +245,12 @@ export class EchoService {
 
     // Replace all the path parameters.
     for (const parameterIndex of Array.from(metadata.requestPathParameters.keys())) {
-      const parameterName = metadata.requestPathParameters.get(parameterIndex);
+      const parameterName = metadata.requestPathParameters.get(parameterIndex)
 
-      url = url.replace(`{${parameterName}}`, String(methodArgs[parameterIndex]));
+      url = url.replace(`{${parameterName}}`, String(methodArgs[parameterIndex]))
     }
 
-    return url;
+    return url
   }
 
   /**
@@ -260,22 +258,22 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveFormData(methodName: string, methodArgs: Array<unknown>): FormData {
-    const metadata = this.getMetadataForMethod(methodName);
-    const formData = new FormData();
+  private resolveFormData (methodName: string, methodArgs: Array<unknown>): FormData {
+    const metadata = this.getMetadataForMethod(methodName)
+    const formData = new FormData()
 
     for (const formFieldIndex of Array.from(metadata.requestFormFieldParameters.keys()).reverse()) {
-      const formFieldData = metadata.requestFormFieldParameters.get(formFieldIndex);
-      const formFieldValue = methodArgs[formFieldIndex];
+      const formFieldData = metadata.requestFormFieldParameters.get(formFieldIndex)
+      const formFieldValue = methodArgs[formFieldIndex]
 
       // Check for potential undefined.
       if (!formFieldValue && formFieldValue !== '') {
-        throw new Error(`Undefined value for form field '${formFieldData?.isObject}'`);
+        throw new Error(`Undefined value for form field '${formFieldData?.isObject}'`)
       }
 
       // When object: add all the keys of the object to the formdata.
       if (formFieldData?.isObject) {
-        const formFieldValueObject = formFieldValue as any;
+        const formFieldValueObject = formFieldValue as any
 
         for (const key of Object.keys(formFieldValueObject)) {
           formData.append(key, formFieldValueObject[key])
@@ -287,7 +285,7 @@ export class EchoService {
       }
     }
 
-    return formData;
+    return formData
   }
 
   /**
@@ -296,22 +294,22 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveFormDataUrlEncoded(methodName: string, methodArgs: Array<unknown>): string {
-    const metadata = this.getMetadataForMethod(methodName);
-    const data = {} as any;
+  private resolveFormDataUrlEncoded (methodName: string, methodArgs: Array<unknown>): string {
+    const metadata = this.getMetadataForMethod(methodName)
+    const data = {} as any
 
     for (const formFieldIndex of Array.from(metadata.requestFormFieldParameters.keys()).reverse()) {
-      const formFieldData = metadata.requestFormFieldParameters.get(formFieldIndex);
-      const formFieldValue = methodArgs[formFieldIndex];
+      const formFieldData = metadata.requestFormFieldParameters.get(formFieldIndex)
+      const formFieldValue = methodArgs[formFieldIndex]
 
       // Check for potential undefined.
       if (!formFieldValue) {
-        throw new Error(`Undefined value for form field '${formFieldData?.isObject}'`);
+        throw new Error(`Undefined value for form field '${formFieldData?.isObject}'`)
       }
 
       // When object: add all the keys of the object to the formdata.
       if (formFieldData?.isObject) {
-        const formFieldValueObject = formFieldValue as any;
+        const formFieldValueObject = formFieldValue as any
 
         for (const key of Object.keys(formFieldValueObject)) {
           data[key] = formFieldValueObject[key]
@@ -325,9 +323,9 @@ export class EchoService {
 
     const dataEncoded = Object.keys(data)
       .map((key: string) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-      .join('&');
+      .join('&')
 
-    return dataEncoded;
+    return dataEncoded
   }
 
   /**
@@ -335,14 +333,14 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveHeaders(methodName: string, methodArgs: Array<unknown>): Array<RequestHeader> {
-    const metadata = this.getMetadataForMethod(methodName);
-    const headers = new Array<RequestHeader>();
+  private resolveHeaders (methodName: string, methodArgs: Array<unknown>): Array<RequestHeader> {
+    const metadata = this.getMetadataForMethod(methodName)
+    const headers = new Array<RequestHeader>()
 
     // Resolve all the parameter headers.
     for (const headerIndex of Array.from(metadata.requestHeaderParameters.keys())) {
-      const headerName = metadata.requestHeaderParameters.get(headerIndex);
-      const headerValue = methodArgs[headerIndex];
+      const headerName = metadata.requestHeaderParameters.get(headerIndex)
+      const headerValue = methodArgs[headerIndex]
 
       headers.push(<RequestHeader>{
         name: headerName,
@@ -353,7 +351,7 @@ export class EchoService {
     // Resolve all the request headers.
     if (metadata.requestHeaders !== undefined) {
       for (const headerName of Object.keys(Object(metadata.requestHeaders))) {
-        const headerValue = metadata.requestHeaders!![headerName];
+        const headerValue = metadata.requestHeaders!![headerName]
 
         headers.push({
           name: headerName,
@@ -370,7 +368,7 @@ export class EchoService {
       value: 'application/json'
     })
 
-    return headers;
+    return headers
   }
 
   /**
@@ -378,14 +376,14 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveQueries(methodName: string, methodArgs: Array<unknown>): Array<RequestQuery> {
-    const metadata = this.getMetadataForMethod(methodName);
-    const queries = new Array<RequestQuery>();
+  private resolveQueries (methodName: string, methodArgs: Array<unknown>): Array<RequestQuery> {
+    const metadata = this.getMetadataForMethod(methodName)
+    const queries = new Array<RequestQuery>()
 
     // Resolve all the request queries.
     if (metadata.requestQueries !== undefined) {
       for (const queryName of Object.keys(Object(metadata.requestQueries))) {
-        const queryValue = metadata.requestQueries!![queryName];
+        const queryValue = metadata.requestQueries!![queryName]
 
         queries.push({
           name: queryName,
@@ -396,8 +394,8 @@ export class EchoService {
 
     // Resolve all the parameter queries.
     for (const queryIndex of Array.from(metadata.requestQueryParameters.keys())) {
-      const queryName = metadata.requestQueryParameters.get(queryIndex);
-      const queryValue = methodArgs[queryIndex];
+      const queryName = metadata.requestQueryParameters.get(queryIndex)
+      const queryValue = methodArgs[queryIndex]
 
       queries.push(<RequestQuery>{
         name: queryName,
@@ -405,7 +403,7 @@ export class EchoService {
       })
     }
 
-    return queries;
+    return queries
   }
 
   /**
@@ -413,43 +411,42 @@ export class EchoService {
    * @param methodName Name of the method
    * @param methodArgs Arguments passed to the method at runtime
    */
-  private resolveBody(methodName: string, methodArgs: Array<unknown>): unknown {
-    const metadata = this.getMetadataForMethod(methodName);
-    let body = {};
+  private resolveBody (methodName: string, methodArgs: Array<unknown>): unknown {
+    const metadata = this.getMetadataForMethod(methodName)
+    let body = {}
 
     for (const bodyIndex of metadata.requestBodyParameters.reverse()) {
-      const bodyValue = methodArgs[bodyIndex];
+      const bodyValue = methodArgs[bodyIndex]
 
-      if (typeof bodyValue !== "object") {
-        throw new Error(`Unable to parse body parameter at index ${bodyIndex} for method '${methodName}'`);
+      if (typeof bodyValue !== 'object') {
+        throw new Error(`Unable to parse body parameter at index ${bodyIndex} for method '${methodName}'`)
       }
 
-      body = {...body, ...bodyValue};
+      body = { ...body, ...bodyValue }
     }
 
-    return body;
+    return body
   }
 
   /**
    * Implement all the methods in the Service.
    */
-  private implementMethods() {
+  private implementMethods () {
     if (this.metadataMap != null) {
       const map = this.metadataMap
 
       for (const methodName of Array.from(map.keys())) {
-
         // Self instance to use in descriptor.
-        const self = this;
+        const self = this
 
         // Create a descriptor that will be used to implement the method.
         const descriptor = {
-          get(): Function {
+          get (): Function {
             return (...args: Array<unknown>) => self.doFetch(methodName, args)
           }
         }
 
-        Object.defineProperty(this, methodName, descriptor);
+        Object.defineProperty(this, methodName, descriptor)
       }
     }
   }
@@ -459,171 +456,170 @@ export class EchoService {
    * @param methodName Name of the method in the service
    * @param methodArguments Arguments of the method in the service.
    */
-  private doFetch<T>(methodName: string, methodArguments: Array<unknown>): EchoPromise<T> {
-    const metadata = this.getMetadataForMethod(methodName);
+  private doFetch<T> (methodName: string, methodArguments: Array<unknown>): EchoPromise<T> {
+    const metadata = this.getMetadataForMethod(methodName)
 
-    const url = this.resolveUrl(methodName, methodArguments);
-    const headers = this.resolveHeaders(methodName, methodArguments);
-    const body = this.resolveBody(methodName, methodArguments);
-    const query = this.resolveQueries(methodName, methodArguments);
+    const url = this.resolveUrl(methodName, methodArguments)
+    const headers = this.resolveHeaders(methodName, methodArguments)
+    const body = this.resolveBody(methodName, methodArguments)
+    const query = this.resolveQueries(methodName, methodArguments)
 
     const fetchData: EchoRequest = {
       method: metadata.requestMethod?.toString(),
       headers: Object.fromEntries(headers.map(header => [header.name, header.value])),
       body: JSON.stringify(body),
       url: url,
-      credentials: "include"
+      credentials: 'include'
     }
     // If Form Url Encoded: override the existing data with the given encoded formdata & add "Content-Type"-header
     if (metadata.isFormUrlEncoded) {
-      const formDataEncoded = this.resolveFormDataUrlEncoded(methodName, methodArguments);
+      const formDataEncoded = this.resolveFormDataUrlEncoded(methodName, methodArguments)
 
       if (fetchData.headers) {
-        fetchData.headers["Content-Type"] = ["application/x-www-form-urlencoded;charset=utf-8"]
+        fetchData.headers['Content-Type'] = ['application/x-www-form-urlencoded;charset=utf-8']
       }
-      fetchData.body = formDataEncoded;
+      fetchData.body = formDataEncoded
     }
 
     // If Form Multipart: override the existing data with given formdata.
     if (metadata.isFormMultipart) {
-      const formData = this.resolveFormData(methodName, methodArguments);
+      const formData = this.resolveFormData(methodName, methodArguments)
 
       // Necessary on Node.JS
       if (formData) {
-        fetchData.headers = {...fetchData.headers}
+        fetchData.headers = { ...fetchData.headers }
       }
 
       fetchData.body = formData
       fetchData.headers = new Headers()
     }
 
-    let echoRequest: EchoRequest = fetchData;
+    let echoRequest: EchoRequest = fetchData
 
     // Execute the interceptors.
     for (const interceptorIndex in this.interceptors) {
-      const interceptor = this.interceptors[interceptorIndex];
+      const interceptor = this.interceptors[interceptorIndex]
 
       // Check if interceptor has the function
       if (!interceptor.onRequest) {
-        continue;
+        continue
       }
 
-      const interceptorRequest = interceptor.onRequest(echoRequest);
+      const interceptorRequest = interceptor.onRequest(echoRequest)
 
       // Check if interceptor result is not undefined.
       if (!interceptorRequest) {
-        throw new Error(`Request interceptor '${interceptorIndex}' must return a variable of type 'EchoRequest'`);
+        throw new Error(`Request interceptor '${interceptorIndex}' must return a variable of type 'EchoRequest'`)
       }
 
-      echoRequest = interceptorRequest;
+      echoRequest = interceptorRequest
     }
 
     if (['GET', 'HEAD', 'OPTIONS', 'DELETE'].includes(<string>fetchData.method)) {
-      delete fetchData.body;
+      delete fetchData.body
     }
 
-    let fetchPromise = new EchoPromise(new Promise<T>((resolve, reject) => {
-      const url = `${fetchData.url}?${query.map(q => encodeURIComponent(q.name) + '=' + encodeURIComponent(q.value)).join('&')}`;
+    const fetchPromise = new EchoPromise(new Promise<T>((resolve, reject) => {
+      const url = `${fetchData.url}?${query.map(q => encodeURIComponent(q.name) + '=' + encodeURIComponent(q.value)).join('&')}`
       fetch(url, fetchData)
         .then(response => {
-          let echoResponse: EchoResponse = response;
+          let echoResponse: EchoResponse = response
           if (response.ok) {
             // Execute the interceptors.
             for (const interceptorIndex in this.interceptors) {
-              const interceptor = this.interceptors[interceptorIndex];
+              const interceptor = this.interceptors[interceptorIndex]
 
               // Check if interceptor has the function
               if (!interceptor.onResponse) {
-                continue;
+                continue
               }
 
-              const interceptorResponse = interceptor.onResponse(echoResponse);
+              const interceptorResponse = interceptor.onResponse(echoResponse)
 
               // Check if interceptor result is not undefined.
               if (!interceptorResponse) {
-                throw new Error(`Response interceptor '${interceptorIndex}' must return a variable of type 'EchoResponse'`);
+                throw new Error(`Response interceptor '${interceptorIndex}' must return a variable of type 'EchoResponse'`)
               }
 
-              echoResponse = interceptorResponse;
+              echoResponse = interceptorResponse
             }
 
-            let data = echoResponse.json().catch(() => {});
+            let data = echoResponse.json().catch(() => {})
 
             // Execute the converters on the response.
             // First converter that can convert the given response will parse it.
             for (const converter of this.converters) {
-
               if (converter.canConvert(echoResponse)) {
-                data = converter.convert(echoResponse);
-                break;
+                data = converter.convert(echoResponse)
+                break
               }
             }
 
             // Add support for Vue
             try {
-              const Vue = require("vue").default;
-              Vue.set(fetchPromise, "status", EchoPromiseStatus.SUCCESS);
-              Vue.set(fetchPromise, "data", data);
-              Vue.set(fetchPromise, "response", echoResponse);
+              const Vue = require('vue').default
+              Vue.set(fetchPromise, 'status', EchoPromiseStatus.SUCCESS)
+              Vue.set(fetchPromise, 'data', data)
+              Vue.set(fetchPromise, 'response', echoResponse)
             } catch (error) {
             }
 
             // Set the EchoPromise fields.
-            fetchPromise.status = EchoPromiseStatus.SUCCESS;
-            fetchPromise.data = <T><unknown>data;
-            fetchPromise.response = echoResponse;
+            fetchPromise.status = EchoPromiseStatus.SUCCESS
+            fetchPromise.data = <T><unknown>data
+            fetchPromise.response = echoResponse
 
-            resolve(data);
+            resolve(data)
           } else {
-            let echoError: EchoError = response;
+            const echoError: EchoError = response
             this.onFetchError(echoError, fetchPromise)
-            reject(echoError);
+            reject(echoError)
           }
         })
         .catch(error => {
-          let echoError: EchoError = error;
+          const echoError: EchoError = error
           this.onFetchError(echoError, fetchPromise)
-          reject(echoError);
+          reject(echoError)
         })
-    }));
+    }))
 
     // Set the EchoPromise specific fields.
-    fetchPromise.status = EchoPromiseStatus.LOADING;
+    fetchPromise.status = EchoPromiseStatus.LOADING
 
-    return fetchPromise;
+    return fetchPromise
   }
 
-  private onFetchError(echoError: EchoError, fetchPromise: EchoPromise<any>){
+  private onFetchError (echoError: EchoError, fetchPromise: EchoPromise<any>) {
     // Execute the interceptors.
     for (const interceptorIndex in this.interceptors) {
-      const interceptor = this.interceptors[interceptorIndex];
+      const interceptor = this.interceptors[interceptorIndex]
 
       // Check if interceptor has the function
       if (!interceptor.onError) {
-        continue;
+        continue
       }
 
-      const interceptorError = interceptor.onError(echoError);
+      const interceptorError = interceptor.onError(echoError)
 
       // Check if interceptor result is not undefined.
       if (!interceptorError) {
-        throw new Error(`Error interceptor '${interceptorIndex}' must return a variable of type 'EchoError'`);
+        throw new Error(`Error interceptor '${interceptorIndex}' must return a variable of type 'EchoError'`)
       }
 
-      echoError = interceptorError;
+      echoError = interceptorError
     }
 
     // Add support for Vue
     try {
-      const Vue = require("vue").default;
-      Vue.set(fetchPromise, "status", EchoPromiseStatus.SUCCESS);
-      Vue.set(fetchPromise, "error", echoError);
+      const Vue = require('vue').default
+      Vue.set(fetchPromise, 'status', EchoPromiseStatus.SUCCESS)
+      Vue.set(fetchPromise, 'error', echoError)
     } catch (error) {
     }
 
     // Set EchoPromise fields.
-    fetchPromise.status = EchoPromiseStatus.ERROR;
-    fetchPromise.error = echoError;
+    fetchPromise.status = EchoPromiseStatus.ERROR
+    fetchPromise.error = echoError
   }
 
   /**
@@ -631,11 +627,11 @@ export class EchoService {
    * @param requestMethod
    * @param requestPath
    */
-  static _registerRequestMethod(requestMethod: RequestMethod, requestPath: string): Function {
+  static _registerRequestMethod (requestMethod: RequestMethod, requestPath: string): Function {
     return (target: EchoService, methodName: string, _: PropertyDescriptor) => {
-      target.setMetadataMethod(methodName, requestMethod);
-      target.setMetadataPath(methodName, requestPath);
-    };
+      target.setMetadataMethod(methodName, requestMethod)
+      target.setMetadataPath(methodName, requestPath)
+    }
   }
 
   /**
@@ -643,10 +639,10 @@ export class EchoService {
    * @param requestHeaders EchoRequest headers.
    * @private
    */
-  static _registerRequestHeaders(requestHeaders: RequestHeaders) {
+  static _registerRequestHeaders (requestHeaders: RequestHeaders) {
     return (target: EchoService, methodName: string, _: PropertyDescriptor) => {
-      target.setMetadataHeaders(methodName, requestHeaders);
-    };
+      target.setMetadataHeaders(methodName, requestHeaders)
+    }
   }
 
   /**
@@ -654,30 +650,30 @@ export class EchoService {
    * @param requestHeaders EchoRequest headers.
    * @private
    */
-  static _registerRequestQueries(requestQueries: RequestQueries) {
+  static _registerRequestQueries (requestQueries: RequestQueries) {
     return (target: EchoService, methodName: string, _: PropertyDescriptor) => {
-      target.setMetadataQueries(methodName, requestQueries);
-    };
+      target.setMetadataQueries(methodName, requestQueries)
+    }
   }
 
   /**
    * Register as Form URL Encoded for a given method.
    * @private
    */
-  static _registerFormUrlEncoded() {
+  static _registerFormUrlEncoded () {
     return (target: EchoService, methodName: string, _: PropertyDescriptor) => {
-      target.setMetadataFormUrlEncoded(methodName, true);
-    };
+      target.setMetadataFormUrlEncoded(methodName, true)
+    }
   }
 
   /**
    * Register as Form Multipart for a given method.
    * @private
    */
-  static _registerFormMultipart() {
+  static _registerFormMultipart () {
     return (target: EchoService, methodName: string, _: PropertyDescriptor) => {
-      target.setMetadataFormMultipart(methodName, true);
-    };
+      target.setMetadataFormMultipart(methodName, true)
+    }
   }
 
   /**
@@ -685,7 +681,7 @@ export class EchoService {
    * @param pathName Name of parameter
    * @private
    */
-  static _registerPathParameter(pathName: string): Function {
+  static _registerPathParameter (pathName: string): Function {
     return (target: EchoService, methodName: string, parameterIndex: number) => {
       target.addMetadataPathParameter(methodName, pathName, parameterIndex)
     }
@@ -697,7 +693,7 @@ export class EchoService {
    * @param isObject If the given parameter is an object of form fields or a single form field.
    * @private
    */
-  static _registerFormFieldParameter(key: string, isObject: boolean): Function {
+  static _registerFormFieldParameter (key: string, isObject: boolean): Function {
     return (target: EchoService, methodName: string, parameterIndex: number) => {
       target.addMetadataFormFieldParameter(methodName, key, isObject, parameterIndex)
     }
@@ -708,7 +704,7 @@ export class EchoService {
    * @param headerName Name of header
    * @private
    */
-  static _registerHeaderParameter(headerName: string): Function {
+  static _registerHeaderParameter (headerName: string): Function {
     return (target: EchoService, methodName: string, parameterIndex: number) => {
       target.addMetadataHeaderParameter(methodName, headerName, parameterIndex)
     }
@@ -718,7 +714,7 @@ export class EchoService {
    * Register a body parameter for a given method.
    * @private
    */
-  static _registerBodyParameter(): Function {
+  static _registerBodyParameter (): Function {
     return (target: EchoService, methodName: string, parameterIndex: number) => {
       target.addMetadataBodyParameter(methodName, parameterIndex)
     }
@@ -728,7 +724,7 @@ export class EchoService {
    * Register a body parameter for a given method.
    * @private
    */
-  static _registerQueryParameter(queryName: string): Function {
+  static _registerQueryParameter (queryName: string): Function {
     return (target: EchoService, methodName: string, parameterIndex: number) => {
       target.addMetadataQueryParameter(methodName, queryName, parameterIndex)
     }
